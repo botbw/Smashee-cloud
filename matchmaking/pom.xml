@@ -9,12 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>botbw</groupId>
-    <artifactId>cloud</artifactId>
+    <artifactId>matchmaking</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cloud</name>
-    <description>cloud</description>
-    <packaging>pom</packaging>
-
+    <name>matchmaking</name>
+    <description>matchmaking</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -52,14 +50,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>16</source>
-                    <target>16</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -24,6 +24,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @ServerEndpoint("/websocket/{jwt}")
 public class WebSocketServer { // NOT BEAN
     private static ConcurrentHashMap<Integer, WebSocketServer> userOf = new ConcurrentHashMap<>();
+    private static CopyOnWriteArraySet<User> pool = new CopyOnWriteArraySet<>();
 
     // the class is not a bean
     private static UserMapper userMapper;
@@ -85,6 +86,8 @@ public class WebSocketServer { // NOT BEAN
         } else {
             sendMessage("unknown event");
         }
+
+
     }
 
     private void startMatching() {

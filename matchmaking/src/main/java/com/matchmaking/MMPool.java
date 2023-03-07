@@ -24,6 +24,7 @@ public class MMPool extends Thread {
         System.out.println("in add player" + uid);
         lock.lock();
         try {
+            pool.removeIf(x -> x.getUid() == uid);
             pool.add(new Player(uid, rating, 0));
         } finally {
             lock.unlock();

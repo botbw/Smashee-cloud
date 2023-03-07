@@ -19,6 +19,7 @@ public class User {
     @NotNull
     private String pwd;
     private String avatar;
+    private Integer rating;
 
     static public final Integer MAX_USRNAME_LENGTH = 50;
     static public final Integer MAX_PWD_LENGTH = 100;

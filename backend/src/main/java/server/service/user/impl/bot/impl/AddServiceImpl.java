@@ -52,7 +52,7 @@ public class AddServiceImpl implements AddService {
         }
 
         Date now = new Date();
-        Bot bot = new Bot(null, user.getUid(), name, description, code, null, now, now);
+        Bot bot = new Bot(null, user.getUid(), name, description, code, now, now);
         botMapper.insert(bot);
         ret.put("MSG", "succeed");
         return ret;

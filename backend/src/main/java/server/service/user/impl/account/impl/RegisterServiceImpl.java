@@ -80,7 +80,7 @@ public class RegisterServiceImpl implements RegisterService {
     public int addUser(String userName, String password) {
         PasswordEncoder passwordEncoder = (PasswordEncoder) context.getBean(PasswordEncoder.class);
         String encodedPwd = passwordEncoder.encode(password);
-        User user = new User(null, userName, encodedPwd, null);
+        User user = new User(null, userName, encodedPwd, null, null);
         return userMapper.insert(user);
     }
 }

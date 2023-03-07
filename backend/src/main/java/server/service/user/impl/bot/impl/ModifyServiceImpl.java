@@ -61,7 +61,7 @@ public class ModifyServiceImpl implements ModifyService {
         }
 
         Date now = new Date();
-        Bot newBot = new Bot(bot.getId(), bot.getUid(), name, description, code, bot.getRating(), bot.getCreatetime(), now);
+        Bot newBot = new Bot(bot.getId(), bot.getUid(), name, description, code, bot.getCreatetime(), now);
         botMapper.updateById(newBot);
 
         ret.put("MSG", "succeed");

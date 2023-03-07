@@ -141,8 +141,8 @@ public class GreedySnake extends Thread{ // generate symmetric map
                 } finally {
                     lock.unlock();
                 }
-                System.out.println("??");
 
+                saveResult();
                 broadcastResult();
                 break;
             }

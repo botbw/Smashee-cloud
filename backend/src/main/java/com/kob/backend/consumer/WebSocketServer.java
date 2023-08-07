@@ -8,6 +8,7 @@ import com.kob.backend.mapper.RecordMapper;
 import com.kob.backend.mapper.UserMapper;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.User;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -18,7 +19,9 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @Component
 @ServerEndpoint("/websocket/{token}")  // 注意不要以'/'结尾
@@ -56,6 +59,7 @@ public class WebSocketServer {
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) throws IOException {
         this.session = session;
+        System.out.println("connected!");
         Integer userId = JwtAuthentication.getUserId(token);
         this.user = userMapper.selectById(userId);
 
@@ -64,10 +68,13 @@ public class WebSocketServer {
         } else {
             this.session.close();
         }
+
+        System.out.println(users);
     }
 
     @OnClose
     public void onClose() {
+        System.out.println("disconnected!");
         if (this.user != null) {
             users.remove(this.user.getId());
         }
@@ -121,6 +128,7 @@ public class WebSocketServer {
     }
 
     private void startMatching(Integer botId) {
+        System.out.println("start matching!");
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("user_id", this.user.getId().toString());
         data.add("rating", this.user.getRating().toString());
@@ -129,12 +137,14 @@ public class WebSocketServer {
     }
 
     private void stopMatching() {
+        System.out.println("stop matching");
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("user_id", this.user.getId().toString());
         restTemplate.postForObject(removePlayerurl, data, String.class);
     }
 
     private void move(int direction) {
+        System.out.println("move " + direction);
         if (game.getPlayerA().getId().equals(user.getId())) {
             if (game.getPlayerA().getBotId().equals(-1))  // 亲自出马
                 game.setNextStepA(direction);
@@ -146,6 +156,7 @@ public class WebSocketServer {
 
     @OnMessage
     public void onMessage(String message, Session session) {  // 当做路由
+        System.out.println("receive message!");
         JSONObject data = JSONObject.parseObject(message);
         String event = data.getString("event");
         if ("start-matching".equals(event)) {
